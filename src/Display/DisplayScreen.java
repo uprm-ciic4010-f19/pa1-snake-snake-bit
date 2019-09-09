@@ -34,7 +34,9 @@ public class DisplayScreen {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.setBackground(Color.black);
+        Color rGBPurple = new Color (128, 0, 128);
+        frame.setBackground(rGBPurple);
+        //Created a new color variable with an RGB value (Purple) and assigned it to background. -Neff
 
         try {
             frame.setIconImage(ImageIO.read(new File("res/Sheets/icon.png")));
@@ -47,7 +49,7 @@ public class DisplayScreen {
         canvas.setMaximumSize(new Dimension(width, height));
         canvas.setMinimumSize(new Dimension(width, height));
         canvas.setFocusable(false);
-        canvas.setBackground(Color.black);
+        canvas.setBackground(rGBPurple);
 
         frame.add(canvas);
         frame.pack();
