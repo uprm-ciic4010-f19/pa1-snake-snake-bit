@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
+import Game.GameStates.State;
+
 /**
  * Created by AlexVR on 7/2/2018.
  */
@@ -20,6 +22,8 @@ public class Player {
 
     public int moveCounter;
     public int moveSpeedChange = 3; // This variable allows for change in speed. - Jesus
+    
+    public int scoreNum; // Created variable for score. -Neff
 
     public String direction;//is your first name one?
 
@@ -39,54 +43,73 @@ public class Player {
         if(moveCounter>=moveSpeedChange) {
             checkCollisionAndMove();
             moveCounter=0;
+            
+        //Figured Backtracking with if statements. -Neff
         }
-        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
-            direction="Up";
+        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){ 
+            if(direction != "Down") {
+            	 direction="Up";
+            }  
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)){
-            direction="Down";
+            if(direction != "Up") {
+           	 direction="Down";
+           }
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT)){
-            direction="Left";
+             if(direction != "Right") {
+           	 direction="Left";
+           }
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
-            direction="Right";
+            if(direction != "Left") {
+           	 direction="Right";
+           }
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) {
         	GenerateTail(); // Tail is  generated at the press of N key. - Jesus
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
         	moveSpeedChange++; // moveSpeedChange increases at the press of = key. - Jesus
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
         	moveSpeedChange--; // moveSpeedChange decreases at the press of - key. - Jesus
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
+        	State.setState(handler.getGame().pauseState); //Introduced Escape Key to Pause the game. -Neff
+        	
         }
+        
 
     }
-
+    //Make Snake Teleport when hitting a wall. -Neff
     public void checkCollisionAndMove(){
         handler.getWorld().playerLocation[xCoord][yCoord]=false;
         int x = xCoord;
         int y = yCoord;
+        
+//        if(){
+//            Eat();
+//        }
+        
         switch (direction){
             case "Left":
                 if(xCoord==0){
-                    kill();
+                    xCoord = handler.getWorld().GridWidthHeightPixelCount-1;
                 }else{
                     xCoord--;
                 }
                 break;
             case "Right":
                 if(xCoord==handler.getWorld().GridWidthHeightPixelCount-1){
-                    kill();
+                    xCoord = 0;
                 }else{
                     xCoord++;
                 }
                 break;
             case "Up":
                 if(yCoord==0){
-                    kill();
+                	yCoord = handler.getWorld().GridWidthHeightPixelCount-1;
                 }else{
                     yCoord--;
                 }
                 break;
             case "Down":
                 if(yCoord==handler.getWorld().GridWidthHeightPixelCount-1){
-                    kill();
+                	yCoord = 0;
                 }else{
                     yCoord++;
                 }
@@ -109,6 +132,13 @@ public class Player {
 
     public void render(Graphics g,Boolean[][] playeLocation){
         Random r = new Random();
+        
+        //Created Score String in the next three lines. -Neff
+        g.setColor(new Color(0, 0, 0));
+        g.setFont(new Font("System", Font.PLAIN, 20));
+        g.drawString("Score: " + scoreNum , 0, 20);
+        
+        
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
                 g.setColor(Color.GREEN);
@@ -132,6 +162,8 @@ public class Player {
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
         moveSpeedChange += 0 + 1; // 0 is my partner's last Student ID digit. - Jesus
+        
+        scoreNum += Math.sqrt(2 * scoreNum + 1); //Added Score Equation. -Neff
     }
     public void GenerateTail(){
         lenght++;
