@@ -19,6 +19,7 @@ public class Player {
     public int yCoord;
 
     public int moveCounter;
+    public int moveSpeedChange = 3; // This variable allows for change in speed. - Jesus
 
     public String direction;//is your first name one?
 
@@ -34,8 +35,8 @@ public class Player {
     }
 
     public void tick(){
-        moveCounter++;
-        if(moveCounter>=5) {
+        moveCounter++; // Condition is now depending on moveSpeedChange. - Jesus
+        if(moveCounter>=moveSpeedChange) {
             checkCollisionAndMove();
             moveCounter=0;
         }
@@ -122,6 +123,7 @@ public class Player {
 
     public void Eat(){
         lenght++;
+        moveSpeedChange += 0 + 1; // 0 is my partner's last Student ID digit. - Jesus
         Tail tail= null;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
