@@ -48,6 +48,12 @@ public class Player {
             direction="Left";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
             direction="Right";
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) {
+        	GenerateTail(); // Tail is  generated at the press of N key. - Jesus
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
+        	moveSpeedChange++; // moveSpeedChange increases at the press of = key. - Jesus
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
+        	moveSpeedChange--; // moveSpeedChange decreases at the press of - key. - Jesus
         }
 
     }
@@ -121,12 +127,17 @@ public class Player {
 
     }
 
-    public void Eat(){
-        lenght++;
-        moveSpeedChange += 0 + 1; // 0 is my partner's last Student ID digit. - Jesus
-        Tail tail= null;
+    public void Eat() { //Separated Eating process from adding Tail process.
+        GenerateTail();
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
+        moveSpeedChange += 0 + 1; // 0 is my partner's last Student ID digit. - Jesus
+    }
+    public void GenerateTail(){
+        lenght++;
+        
+        Tail tail= null;
+        
         switch (direction){
             case "Left":
                 if( handler.getWorld().body.isEmpty()){
