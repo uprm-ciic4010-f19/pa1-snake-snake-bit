@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import Game.GameStates.State;
 
 /**
@@ -81,10 +83,6 @@ public class Player {
         int x = xCoord;
         int y = yCoord;
         
-//        if(){
-//            Eat();
-//        }
-        
         switch (direction){
             case "Left":
                 if(xCoord==0){
@@ -117,7 +115,6 @@ public class Player {
         }
         handler.getWorld().playerLocation[xCoord][yCoord]=true;
 
-
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
             Eat();
         }
@@ -127,7 +124,16 @@ public class Player {
             handler.getWorld().body.removeLast();
             handler.getWorld().body.addFirst(new Tail(x, y,handler));
         }
-
+        
+      if(handler.getWorld().body.size() > 0) {
+      	for(int i = 0; i < handler.getWorld().body.size(); i++) {
+      		if(handler.getWorld().body.get(0) != handler.getWorld().body.get(i)) {
+      			if(xCoord == handler.getWorld().body.get(i).x && yCoord == handler.getWorld().body.get(i).y)
+      				kill();
+      		}
+      	}
+      }
+        
     }
 
     public void render(Graphics g,Boolean[][] playeLocation){
@@ -277,11 +283,12 @@ public class Player {
         lenght = 0;
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
-
                 handler.getWorld().playerLocation[i][j]=false;
-
             }
         }
+        JOptionPane.showMessageDialog(null, "You made the snake eat itself, so you lost!",
+    			"Game Over", JOptionPane.OK_OPTION);
+    	State.setState(handler.getGame().menuState);
     }
 
     public boolean isJustAte() {
