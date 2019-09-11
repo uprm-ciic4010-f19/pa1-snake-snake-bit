@@ -23,7 +23,7 @@ public class Player {
     public int yCoord;
 
     public int moveCounter;
-    public int moveSpeedChange = 3; // This variable allows for change in speed. - Jesus
+    public int moveSpeedChange = 3; // This variable allows for change in speed. -Jesus
     
     public int scoreNum; // Created variable for score. -Neff
 
@@ -41,7 +41,7 @@ public class Player {
     }
 
     public void tick(){
-        moveCounter++; // Condition is now depending on moveSpeedChange. - Jesus
+        moveCounter++; // Condition is now depending on moveSpeedChange. -Jesus
         if(moveCounter>=moveSpeedChange) {
             checkCollisionAndMove();
             moveCounter=0;
@@ -65,11 +65,11 @@ public class Player {
            	 direction="Right";
            }
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) {
-        	GenerateTail(); // Tail is  generated at the press of N key. - Jesus
+        	handler.getWorld().body.addLast(new Tail(xCoord, yCoord,handler)); // Tail is  generated at the press of N key. -Jesus
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
-        	moveSpeedChange++; // moveSpeedChange increases at the press of = key. - Jesus
+        	moveSpeedChange++; // moveSpeedChange increases at the press of = key. -Jesus
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
-        	moveSpeedChange--; // moveSpeedChange decreases at the press of - key. - Jesus
+        	moveSpeedChange--; // moveSpeedChange decreases at the press of - key. -Jesus
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
         	State.setState(handler.getGame().pauseState); //Introduced Escape Key to Pause the game. -Neff
         	
@@ -163,17 +163,12 @@ public class Player {
 
     }
 
-    public void Eat() { //Separated Eating process from adding Tail process.
-        GenerateTail();
+    public void Eat() {
+        moveSpeedChange += 0 + 1; // 0 is my partner's last Student ID digit. -Jesus
+        scoreNum += Math.sqrt(2 * scoreNum + 1); //Added Score Equation. -Neff
+        lenght++;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
-        moveSpeedChange += 0 + 1; // 0 is my partner's last Student ID digit. - Jesus
-        
-        scoreNum += Math.sqrt(2 * scoreNum + 1); //Added Score Equation. -Neff
-    }
-    public void GenerateTail(){
-        lenght++;
-        
         Tail tail= null;
         
         switch (direction){
